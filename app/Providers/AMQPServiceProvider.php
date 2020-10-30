@@ -3,6 +3,11 @@
 
 namespace App\Providers;
 
+use App\Console\Commands\FinalPubSub\OverallConsumer;
+use App\Console\Commands\FinalPubSub\Subscriber;
+use App\Console\Services\AMQP\MessagesConsumer;
+use App\Console\Services\AMQP\MessagesConsumerConfiguration;
+use Bschmitt\Amqp\Amqp;
 use Illuminate\Support\ServiceProvider;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
@@ -38,6 +43,26 @@ final class AMQPServiceProvider extends ServiceProvider
                     ->channel();
             }
         );
+
+        $this->app->when(
+            [
+                Subscriber::class,
+                OverallConsumer::class,
+            ]
+        )->needs(MessagesConsumer::class)
+            ->give(
+                function () {
+                    return new MessagesConsumer(
+                        $this->app->make(Amqp::class),
+                        new MessagesConsumerConfiguration(
+                            '',
+                            true,
+                            true,
+                            true,
+                        ),
+                    );
+                }
+            );
     }
 
     public function boot()
