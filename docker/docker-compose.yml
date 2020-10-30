@@ -13,6 +13,7 @@ services:
     volumes:
       - ../:/var/www
     environment:
+      COMPOSER_MEMORY_LIMIT: 2G
       XDEBUG_CONFIG: remote_host=${XDEBUG_REMOTE_HOST} remote_enable=1 remote_autostart=off remote_port=${XDEBUG_STORM_PORT}
       PHP_IDE_CONFIG: serverName=${XDEBUG_STORM_SERVER_NAME}
     networks:
