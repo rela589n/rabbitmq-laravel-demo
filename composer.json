@@ -9,13 +9,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
+        "bschmitt/laravel-amqp": "^2.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.0",
-        "ext-json": "*"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
