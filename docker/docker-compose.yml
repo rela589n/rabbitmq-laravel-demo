@@ -7,7 +7,8 @@ services:
         uid: ${PHP_UID}
         gid: ${PHP_GID}
       context: ./services/php
-    image: ${IMAGE_NAME}
+    image: php_image_${PROJECT_NAME}
+    container_name: php_${PROJECT_NAME}
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -23,6 +24,7 @@ services:
   db:
     image: mysql:8
     restart: unless-stopped
+    container_name: db_${PROJECT_NAME}
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -36,6 +38,7 @@ services:
       - main_network
   nginx:
     image: nginx:1.17-alpine
+    container_name: nginx_${PROJECT_NAME}
     restart: unless-stopped
     ports:
       - ${NGINX_LOCAL_PORT}:80
@@ -48,6 +51,7 @@ services:
       - php
   rabbitmq:
     image: library/rabbitmq:3.8.9
+    container_name: rabbit_${PROJECT_NAME}
     restart: unless-stopped
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
@@ -63,5 +67,5 @@ networks:
     name: ${NETWORK_MAIN}
     ipam:
       driver: default
-      config:
-        - subnet: ${XDEBUG_SUBNET_IP}/${XDEBUG_SUBNET_MASK}
+#      config:
+#        - subnet: ${XDEBUG_SUBNET_IP}/${XDEBUG_SUBNET_MASK}

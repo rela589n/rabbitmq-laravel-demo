@@ -29,7 +29,7 @@ class AMQPWorker extends Command
         $this->channel->queue_declare(
             'jobs',
             false,
-            false,
+            true, // will survive rabbit server restart
             false,
             false
         );

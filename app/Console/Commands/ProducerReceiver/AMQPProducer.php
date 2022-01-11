@@ -29,7 +29,7 @@ final class AMQPProducer extends Command
         $this->channel->queue_declare(
             'hello',
             false,
-            true,
+            true, // will survive rabbit server restart
             false,
             false
         );
